@@ -50,6 +50,18 @@ extern YYSTYPE cool_yylval;
  */
 
 DARROW          =>
+INTEGER         [0-9]+
+a               [aA]
+i               [iI]
+e               [eE]
+s               [sS]
+f               [fF]
+n               [nN]
+l               [lL]
+o               [oO]
+p               [pP]
+t               [tT]
+w               [wW]
 
 %%
 
@@ -62,7 +74,13 @@ DARROW          =>
   *  The multiple-character operators.
   */
 {DARROW}		{ return (DARROW); }
-
+{INTEGER}               { cool_yylval.symbol = inttable.add_string(yytext);
+return (INT_CONST);
+}
+{BOOL}                  {cool_yylval.boolean = stringtable.add_string(yytext);
+return (BOOL_CONST);
+}
+{
  /*
   * Keywords are case-insensitive except for the values true and false,
   * which must begin with a lower-case letter.
